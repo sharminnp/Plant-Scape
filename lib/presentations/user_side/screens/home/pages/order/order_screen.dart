@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:plant_app/presentations/admin_side/admin_active.dart';
-import 'package:plant_app/presentations/admin_side/admin_completed.dart';
+
 import 'package:plant_app/presentations/user_side/screens/home/pages/order/active_screen.dart';
 import 'package:plant_app/presentations/user_side/screens/home/pages/order/completed_Screen.dart';
 
-class AdminOrders extends StatelessWidget {
-  const AdminOrders({super.key});
+class OrderScreen extends StatelessWidget {
+  const OrderScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +29,10 @@ class AdminOrders extends StatelessWidget {
           ),
         ),
         body: TabBarView(
-          children: [AdminActiveScreen(), AdminCompletedScreen()],
+          children: [
+            ActiveScreen(),
+            CompletedScreen(),
+          ],
         ),
       ),
     );

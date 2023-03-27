@@ -1,6 +1,6 @@
 import 'package:another_stepper/another_stepper.dart';
 import 'package:flutter/material.dart';
-import 'package:plant_app/presentations/screens/home/pages/order/active_screen.dart';
+import 'package:plant_app/presentations/user_side/screens/home/pages/order/active_screen.dart';
 
 class AdminTrackOrderScreen extends StatelessWidget {
   AdminTrackOrderScreen({super.key});
@@ -63,7 +63,7 @@ class AdminTrackOrderScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 20),
             child: AnotherStepper(
-              gap: 50,
+              verticalGap: 50,
               inActiveBarColor: Colors.black,
               stepperList: stepperData,
               stepperDirection: Axis.vertical,

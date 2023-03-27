@@ -42,8 +42,11 @@ Future<void> addProduct(
     required String about,
     required int price,
     required String image}) async {
-  final productDoc =
-      FirebaseFirestore.instance.collection('Products').doc(name + category);
+  final productDoc = FirebaseFirestore.instance
+      .collection('PlantScape')
+      .doc('Admin')
+      .collection('Products')
+      .doc(name + category);
 
   final product = ProductModel(
       category: category, name: name, about: about, price: price, image: image);
@@ -55,14 +58,20 @@ Future<void> addProduct(
 Future<void> deleteProduct(
     {required String name, required String category}) async {
   await FirebaseFirestore.instance
+      .collection('PlantScape')
+      .doc('Admin')
       .collection('Products')
       .doc(name + category)
       .delete();
 }
 
 Stream<List<ProductModel>> getAllProducts() {
-  return FirebaseFirestore.instance.collection('Products').snapshots().map(
-      (snapshot) => snapshot.docs
+  return FirebaseFirestore.instance
+      .collection('PlantScape')
+      .doc('Admin')
+      .collection("Products")
+      .snapshots()
+      .map((snapshot) => snapshot.docs
           .map((doc) => ProductModel.fromJson(doc.data()))
           .toList());
 }

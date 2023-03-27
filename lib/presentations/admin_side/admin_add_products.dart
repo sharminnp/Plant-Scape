@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:plant_app/domain/product_model.dart';
 import 'package:plant_app/presentations/admin_side/admin_products.dart';
-import 'package:plant_app/presentations/screens/widgets/text_field.dart';
+import 'package:plant_app/presentations/user_side/screens/widgets/text_field.dart';
 
 class AddProducts extends StatefulWidget {
   const AddProducts({super.key});
@@ -35,11 +35,8 @@ class _AddProductsState extends State<AddProducts> {
   }
 
   Future<String> uploadImage() async {
-    if (imageFile == null) {
-      return '';
-    }
-    final path = 'file/${imageFile!.name}';
     final file = File(imageFile!.path);
+    final path = 'file/${imageFile!.name}';
 
     final ref = FirebaseStorage.instance.ref().child(path);
     final uploadTask = ref.putFile(file);
@@ -64,9 +61,9 @@ class _AddProductsState extends State<AddProducts> {
                   iconSize: 30,
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => AdminProducts()));
+                        builder: (context) => const AdminProducts()));
                   },
-                  icon: Icon(Icons.arrow_back)),
+                  icon: const Icon(Icons.arrow_back)),
             ),
             Padding(
               padding: const EdgeInsets.only(
@@ -90,7 +87,7 @@ class _AddProductsState extends State<AddProducts> {
                         onPressed: () {
                           pickImageFile();
                         },
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.add,
                           color: Colors.white,
                           size: 30,
@@ -144,6 +141,7 @@ class _AddProductsState extends State<AddProducts> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: textFieldWidget(
+                keyboardType: TextInputType.number,
                 hintText: "Price",
                 Icons: Icons.price_change,
                 controller: priceController,
@@ -158,13 +156,12 @@ class _AddProductsState extends State<AddProducts> {
             ),
             ElevatedButton(
                 onPressed: () async {
-                  log('1');
                   if (!formKey.currentState!.validate()) {
                     return;
                   }
-                  log('2');
+
                   if (imageFile == null) return;
-                  log('3');
+
                   final uploadedImage = await uploadImage();
                   log(uploadedImage);
                   addProduct(
@@ -174,9 +171,9 @@ class _AddProductsState extends State<AddProducts> {
                     price: int.parse(priceController.text.trim()),
                     image: uploadedImage,
                   );
-                  log('4');
+                  Navigator.pop(context);
                 },
-                child: Text("Add Product"))
+                child: const Text("Add Product"))
           ],
         ),
       ),

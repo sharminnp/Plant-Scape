@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:plant_app/constant/user_constant.dart';
 
 class CartModel {
   final String category;
@@ -40,8 +41,13 @@ Future<void> addToCart(
     required String name,
     required int price,
     required int quantity}) async {
-  final cartDoc =
-      FirebaseFirestore.instance.collection('Cart').doc(name + category);
+  final cartDoc = FirebaseFirestore.instance
+      .collection('PlantScape')
+      .doc('Users')
+      .collection('Profile')
+      .doc(userEmail)
+      .collection('Cart')
+      .doc(name + category);
   final cart = CartModel(
       category: category,
       image: image,
@@ -54,19 +60,36 @@ Future<void> addToCart(
 }
 
 Stream<List<CartModel>> getToCart() {
-  return FirebaseFirestore.instance.collection('Cart').snapshots().map(
-      (snapshot) =>
+  return FirebaseFirestore.instance
+      .collection('PlantScape')
+      .doc('Users')
+      .collection('Profile')
+      .doc(userEmail)
+      .collection('Cart')
+      .snapshots()
+      .map((snapshot) =>
           snapshot.docs.map((doc) => CartModel.fromJson(doc.data())).toList());
 }
 
 Future<void> delteFromCart(
     {required String name, required String category}) async {
-  FirebaseFirestore.instance.collection('Cart').doc(name + category).delete();
+  FirebaseFirestore.instance
+      .collection('PlantScape')
+      .doc('Users')
+      .collection('Profile')
+      .doc(userEmail)
+      .collection('Cart')
+      .doc(name + category)
+      .delete();
 }
 
 Future<void> updateCartQuantity(
     {required CartModel cart, required int quantity}) async {
   final cartDoc = FirebaseFirestore.instance
+      .collection('PlantScape')
+      .doc('Users')
+      .collection('Profile')
+      .doc(userEmail)
       .collection('Cart')
       .doc(cart.name + cart.category);
   final newCart = CartModel(
