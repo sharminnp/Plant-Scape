@@ -1,30 +1,75 @@
 import 'package:flutter/material.dart';
+import 'package:plant_app/constant/constants.dart';
+import 'package:plant_app/domain/order_model.dart';
 
 import 'package:plant_app/presentations/user_side/screens/home/pages/order/track_order.dart';
 
 class ActiveScreen extends StatelessWidget {
-  const ActiveScreen({super.key});
-
+  ActiveScreen({
+    super.key,
+  });
+  //final OrderModel order;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            active(context,
-                colors: Colors.green.shade800, text1: 'track order'),
-            active(context,
-                colors: Colors.green.shade800, text1: 'track order'),
-            active(context,
-                colors: Colors.green.shade800, text1: 'track order'),
-            active(context,
-                colors: Colors.green.shade800, text1: 'track order'),
-            active(context, colors: Colors.green.shade800, text1: 'track order')
-          ],
-        ),
-      ),
-    );
+        backgroundColor: Colors.grey[200],
+        body: Container(
+          padding: EdgeInsets.only(top: 5),
+          height: 120,
+          width: double.infinity,
+          decoration: BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.circular(30)),
+          child: Row(
+            children: [
+              // Container(
+              //     height: 120,
+              //     width: 120,
+              //     child: Image.network(order.orderImage)),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Text(
+                  //   order.orderProductName,
+                  //   style: TextStyle(
+                  //       fontSize: 18,
+                  //       fontWeight: FontWeight.bold,
+                  //       color: Colors.green[800]),
+                  // ),
+                  kHeight10,
+                  // Text('Qty = ${order.quantity.toString()}'),
+                  kHeight10,
+                  // Text(
+                  // //  order.orderPrice.toString(),
+                  //   style: TextStyle(
+                  //       fontSize: 17,
+                  //       fontWeight: FontWeight.bold,
+                  //       color: Colors.green[800]),
+                  // ),
+                  kHeight10,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => TrackOrderScreen()));
+                    },
+                    child: Container(
+                      height: 23,
+                      width: 90,
+                      decoration: BoxDecoration(
+                          color: Colors.green[800],
+                          borderRadius: BorderRadius.circular(20)),
+                      child: Center(
+                        child: Text(
+                          "Track Order",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ));
   }
 }
 

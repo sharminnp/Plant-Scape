@@ -1,9 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:plant_app/presentations/admin_side/admin_order.dart';
 import 'package:plant_app/presentations/admin_side/admin_products.dart';
+import 'package:plant_app/presentations/admin_side/admin_profile/admin_profile.dart';
 
 class AdminScreen extends StatefulWidget {
   const AdminScreen({super.key});
@@ -16,23 +15,12 @@ class _AdminScreenState extends State<AdminScreen> {
   final adminScreens = [
     const AdminOrders(),
     const AdminProducts(),
+    const AdminProfile()
   ];
   int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.green[800],
-        elevation: 0,
-        actions: [
-          IconButton(
-            onPressed: () async {
-              await FirebaseAuth.instance.signOut();
-            },
-            icon: const Icon(Icons.logout),
-          ),
-        ],
-      ),
       body: adminScreens[currentIndex],
       bottomNavigationBar: BottomNavigationBar(
           backgroundColor: Colors.green[800],
@@ -46,6 +34,7 @@ class _AdminScreenState extends State<AdminScreen> {
                 icon: Icon(Icons.shopping_cart), label: "order"),
             BottomNavigationBarItem(
                 icon: Icon(Icons.shopping_bag), label: "Products"),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
           ]),
     );
   }

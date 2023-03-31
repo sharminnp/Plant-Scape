@@ -58,7 +58,7 @@ class ProfileScreen extends StatelessWidget {
               text: 'Address',
               ontap: () {
                 Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => AdressScreen()));
+                    MaterialPageRoute(builder: (context) => AddressScreen()));
               }),
           listtileFunction(
               icons: Icons.help_center,

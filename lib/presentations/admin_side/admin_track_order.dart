@@ -1,28 +1,36 @@
+import 'dart:developer';
+
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:another_stepper/another_stepper.dart';
 import 'package:flutter/material.dart';
-import 'package:plant_app/presentations/user_side/screens/home/pages/order/active_screen.dart';
+import 'package:plant_app/domain/order_model.dart';
+import 'package:plant_app/presentations/admin_side/order_card.dart';
+import 'package:plant_app/presentations/user_side/screens/widgets/snackbar.dart';
 
 class AdminTrackOrderScreen extends StatelessWidget {
-  AdminTrackOrderScreen({super.key});
+  AdminTrackOrderScreen(
+      {super.key, required this.order, required this.DeliveryProcess});
+  final OrderModel order;
+  final int DeliveryProcess;
   List<StepperData> stepperData = [
     StepperData(
       title: StepperText("Order Placed",
           textStyle: TextStyle(color: Colors.green[800])),
       subtitle: StepperText("Your order has been placed",
-          textStyle: TextStyle(color: Colors.black)),
+          textStyle: const TextStyle(color: Colors.black)),
     ),
     StepperData(
       title:
           StepperText("Packed", textStyle: TextStyle(color: Colors.green[800])),
       subtitle: StepperText("Your order is being prepared",
-          textStyle: TextStyle(color: Colors.black)),
+          textStyle: const TextStyle(color: Colors.black)),
     ),
     StepperData(
       title: StepperText("Out for Delivery",
           textStyle: TextStyle(color: Colors.green[800])),
       subtitle: StepperText(
           "Our delivery executive is on the way to deliver\nyour item",
-          textStyle: TextStyle(color: Colors.black)),
+          textStyle: const TextStyle(color: Colors.black)),
     ),
     StepperData(
         title: StepperText("Delivered",
@@ -30,6 +38,7 @@ class AdminTrackOrderScreen extends StatelessWidget {
   ];
   @override
   Widget build(BuildContext context) {
+    log(DeliveryProcess.toString());
     return Scaffold(
       //appBar: AppBar(),
       backgroundColor: Colors.grey[200],
@@ -42,8 +51,7 @@ class AdminTrackOrderScreen extends StatelessWidget {
                 child: IconButton(
                     iconSize: 30,
                     onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => ActiveScreen()));
+                      Navigator.pop(context);
                     },
                     icon: Icon(Icons.arrow_back)),
               ),
@@ -59,10 +67,11 @@ class AdminTrackOrderScreen extends StatelessWidget {
               ),
             ],
           ),
-          active(context, colors: (Colors.transparent), text1: ''),
+          OrderCard(order: order),
           Padding(
             padding: const EdgeInsets.only(left: 20),
             child: AnotherStepper(
+              activeIndex: order.deleveryProcess,
               verticalGap: 50,
               inActiveBarColor: Colors.black,
               stepperList: stepperData,
@@ -71,6 +80,19 @@ class AdminTrackOrderScreen extends StatelessWidget {
             ),
           ),
         ]),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          int currentDeliveryProcess = order.deleveryProcess;
+
+          await updateDeliveryStatus(order, currentDeliveryProcess + 1);
+          Utils.customSnackbar(
+              context: context,
+              text: "Delivery status updated",
+              type: AnimatedSnackBarType.success);
+          Navigator.pop(context);
+        },
+        child: Icon(Icons.add),
       ),
     );
   }

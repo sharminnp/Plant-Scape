@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
-class AddressCard extends StatelessWidget {
-  const AddressCard(
+class PromoCodeCard extends StatelessWidget {
+  const PromoCodeCard(
       {super.key,
       required this.title,
       required this.subtitle,
@@ -22,7 +22,7 @@ class AddressCard extends StatelessWidget {
           color: Colors.grey[300], borderRadius: BorderRadius.circular(20)),
       child: ListTile(
           leading: const Icon(
-            Icons.location_on,
+            Icons.percent_outlined,
             color: Colors.black,
           ),
           title: Text(

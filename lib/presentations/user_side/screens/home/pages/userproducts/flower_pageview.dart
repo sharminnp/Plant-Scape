@@ -49,62 +49,61 @@ class FlowerPageView extends StatelessWidget {
                             itemBuilder: (ctx, index) {
                               final flowers = flowersList[index];
                               return GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) =>
-                                          PlantScreen(product: flowers)));
-                                },
-                                child: Container(
-                                    height: 900,
-                                    //
-                                    //color: Colors.red,
-                                    width: double.infinity,
-                                    child: Positioned(
-                                      bottom: 0,
-                                      left: 10,
-                                      right: 10,
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                            color: plantColor[index],
-                                            borderRadius:
-                                                BorderRadius.circular(20)),
-                                        height: 150,
-                                        width: double.infinity,
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                PlantScreen(product: flowers)));
+                                  },
+                                  // child: Container(
+                                  //height: 900,
+                                  //
+                                  // color: Colors.red,
+                                  //width: double.infinity,
+                                  child: Positioned(
+                                    bottom: 0,
+                                    left: 10,
+                                    right: 10,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          color: plantColor[index],
+                                          borderRadius:
+                                              BorderRadius.circular(20)),
+                                      height: 150,
+                                      width: double.infinity,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
                                         child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
                                           children: [
                                             Image.network(
                                               flowers.image,
                                               //sfit: BoxFit.contain,
-                                              width: 150,
+                                              width: double.infinity,
                                               height: 127,
                                             ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 20, left: 20),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Text(flowers.name),
-                                                  IconButton(
-                                                      onPressed: () {},
-                                                      icon: const Icon(Icons
-                                                          .favorite_border))
-                                                ],
-                                              ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Expanded(
+                                                    child: Text(flowers.name)),
+                                                IconButton(
+                                                    onPressed: () {},
+                                                    icon: const Icon(
+                                                        Icons.favorite_border))
+                                              ],
                                             ),
-                                            Padding(
-                                              padding:
-                                                  EdgeInsets.only(right: 100),
-                                              child: Text(
-                                                  flowers.price.toString()),
-                                            )
+                                            Text(flowers.price.toString())
                                           ],
                                         ),
                                       ),
-                                    )),
-                              );
+                                    ),
+                                  )
+                                  //),
+                                  );
                             }),
                       ),
               );

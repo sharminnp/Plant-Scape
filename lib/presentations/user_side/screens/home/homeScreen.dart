@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:plant_app/presentations/user_side/screens/home/pages/cart/card_screen.dart';
+import 'package:plant_app/presentations/user_side/screens/home/pages/cart/cart_screen.dart';
 import 'package:plant_app/presentations/user_side/screens/home/pages/main_Screen.dart';
 import 'package:plant_app/presentations/user_side/screens/home/pages/order/order_screen.dart';
 import 'package:plant_app/presentations/user_side/screens/home/pages/profile/profile_screen.dart';
@@ -17,8 +17,8 @@ class _HomeScreenState extends State<HomeScreen> {
   int currentIndex = 0;
   final screens = [
     MainScreen(),
-    CardScreen(),
-    const OrderScreen(),
+    CartScreen(),
+    OrderScreen(),
     const WhishlistScreen(),
     const ProfileScreen()
   ];

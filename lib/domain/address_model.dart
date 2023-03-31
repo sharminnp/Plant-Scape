@@ -64,3 +64,14 @@ Stream<List<AddressModel>> getAllAddress() {
   //   adressmodelList.add()
   //  });
 }
+
+Future deleteAddress({required String addressType}) async {
+  await FirebaseFirestore.instance
+      .collection('PlantScape')
+      .doc('Users')
+      .collection('Profile')
+      .doc(userEmail)
+      .collection('Address')
+      .doc(addressType)
+      .delete();
+}
