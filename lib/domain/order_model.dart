@@ -1,3 +1,5 @@
+import 'dart:core';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:plant_app/constant/user_constant.dart';
 
@@ -95,7 +97,7 @@ Future<void> updateDeliveryStatus(OrderModel order, int deliveryStatus) async {
   );
 
   final json = newOrderModel.toJson();
-  await doc.update(json);
+  await doc.set(json);
 }
 
 Stream<List<OrderModel>> getAllOrders() {
@@ -107,4 +109,14 @@ Stream<List<OrderModel>> getAllOrders() {
       .map((snapshot) => snapshot.docs
           .map((docs) => OrderModel.fromJson(docs.data()))
           .toList());
+}
+
+Future<OrderModel> getOrderByOrderId(String orderId) async {
+  final doc = await FirebaseFirestore.instance
+      .collection('PlantScape')
+      .doc('Admin')
+      .collection('Orders')
+      .doc(orderId)
+      .get();
+  return OrderModel.fromJson(doc.data()!);
 }

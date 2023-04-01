@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class WhishlistScreen extends StatelessWidget {
   const WhishlistScreen({super.key});
@@ -6,16 +7,13 @@ class WhishlistScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text("Whishlist"),
-        backgroundColor: Colors.green[800],
-      ),
-      backgroundColor: Colors.grey[200],
-      body: Column(
-        children: [whishlist(), whishlist(), whishlist(), whishlist()],
-      ),
-    );
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text("Whishlist"),
+          backgroundColor: Colors.green[800],
+        ),
+        backgroundColor: Colors.grey[200],
+        body: Obx(() => whishlist()));
   }
 
   Widget whishlist() {
@@ -45,9 +43,6 @@ class WhishlistScreen extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                           color: Colors.green[800]),
                     ),
-                    SizedBox(
-                      height: 30,
-                    ),
                     Text(
                       "500",
                       style: TextStyle(
@@ -57,19 +52,16 @@ class WhishlistScreen extends StatelessWidget {
                     )
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 120),
-                  child: Column(
-                    children: [
-                      IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.favorite,
-                            color: Colors.green[800],
-                          )),
-                      IconButton(onPressed: () {}, icon: Icon(Icons.add))
-                    ],
-                  ),
+                Column(
+                  children: [
+                    IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.favorite,
+                          color: Colors.green[800],
+                        )),
+                    IconButton(onPressed: () {}, icon: Icon(Icons.add))
+                  ],
                 )
               ],
             )

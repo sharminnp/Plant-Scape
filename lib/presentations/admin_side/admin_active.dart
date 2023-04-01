@@ -1,7 +1,4 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:plant_app/constant/constants.dart';
 import 'package:plant_app/domain/order_model.dart';
 import 'package:plant_app/presentations/admin_side/order_card.dart';
 
@@ -15,35 +12,29 @@ class AdminActiveScreen extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Center(
-            child: Text(
-              snapshot.error.toString(),
-            ),
+            child: Text(snapshot.error.toString()),
           );
         } else if (snapshot.hasData) {
           final orderList = snapshot.data!;
-          List<OrderModel> activeList = [];
+          List<OrderModel> activeOrderList = [];
           for (var order in orderList) {
-            if (order.isCompleted == false) {
-              activeList.add(order);
+            if (order.isCancelled == false) {
+              activeOrderList.add(order);
             }
           }
-
-          return activeList.isEmpty
+          return activeOrderList.isEmpty
               ? Center(
-                  child: Text("No orders"),
+                  child: Text("No active orders"),
                 )
-              : ListView.separated(
+              : ListView.builder(
+                  itemCount: activeOrderList.length,
                   itemBuilder: (context, index) {
-                    final order = activeList[index];
-                    log("delery process${order.deleveryProcess}");
+                    final order = activeOrderList[index];
                     return OrderCard(order: order);
                   },
-                  separatorBuilder: (context, index) {
-                    return kHeight10;
-                  },
-                  itemCount: activeList.length);
+                );
         } else {
-          return const Center(
+          return Center(
             child: CircularProgressIndicator(),
           );
         }

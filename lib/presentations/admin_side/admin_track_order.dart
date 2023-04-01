@@ -86,11 +86,11 @@ class AdminTrackOrderScreen extends StatelessWidget {
           int currentDeliveryProcess = order.deleveryProcess;
 
           await updateDeliveryStatus(order, currentDeliveryProcess + 1);
-          Utils.customSnackbar(
-              context: context,
-              text: "Delivery status updated",
-              type: AnimatedSnackBarType.success);
-          Navigator.pop(context);
+          // Utils.customSnackbar(
+          //     context: context,
+          //     text: "Delivery status updated",
+          //     type: AnimatedSnackBarType.success);
+          // Navigator.pop(context);
         },
         child: Icon(Icons.add),
       ),
