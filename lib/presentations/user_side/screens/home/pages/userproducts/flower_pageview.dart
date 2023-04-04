@@ -1,6 +1,9 @@
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:plant_app/domain/product_model.dart';
+import 'package:plant_app/domain/wishlist.dart';
 import 'package:plant_app/presentations/user_side/screens/home/pages/plantdetails/plant_screen.dart';
+import 'package:plant_app/presentations/user_side/screens/widgets/snackbar.dart';
 
 class FlowerPageView extends StatelessWidget {
   const FlowerPageView({
@@ -90,10 +93,59 @@ class FlowerPageView extends StatelessWidget {
                                               children: [
                                                 Expanded(
                                                     child: Text(flowers.name)),
-                                                IconButton(
-                                                    onPressed: () {},
-                                                    icon: const Icon(
-                                                        Icons.favorite_border))
+                                                StreamBuilder(
+                                                    stream: getAllWishlist(),
+                                                    builder:
+                                                        (context, snapshot) {
+                                                      final wishlist =
+                                                          snapshot.data!;
+                                                      return IconButton(
+                                                          onPressed: () async {
+                                                            if (wishlist
+                                                                .where((element) =>
+                                                                    (element.name +
+                                                                        element
+                                                                            .category) ==
+                                                                    (flowers.name +
+                                                                        flowers
+                                                                            .category))
+                                                                .isEmpty) {
+                                                              await addToWishlist(
+                                                                  product:
+                                                                      flowers);
+                                                              Utils.customSnackbar(
+                                                                  context:
+                                                                      context,
+                                                                  text:
+                                                                      "Item added to wishlist",
+                                                                  type: AnimatedSnackBarType
+                                                                      .success);
+                                                            } else {
+                                                              await removeFromWishlist(
+                                                                  flowers);
+                                                              Utils.customSnackbar(
+                                                                  context:
+                                                                      context,
+                                                                  text:
+                                                                      "Item removed to wishlist",
+                                                                  type: AnimatedSnackBarType
+                                                                      .warning);
+                                                            }
+                                                          },
+                                                          icon: Icon(wishlist
+                                                                  .where((element) =>
+                                                                      (element.name +
+                                                                          element
+                                                                              .category) ==
+                                                                      (flowers.name +
+                                                                          flowers
+                                                                              .category))
+                                                                  .isEmpty
+                                                              ? Icons
+                                                                  .favorite_border
+                                                              : Icons
+                                                                  .favorite));
+                                                    })
                                               ],
                                             ),
                                             Text(flowers.price.toString())

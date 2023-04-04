@@ -1,8 +1,11 @@
 import 'dart:developer';
 
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:plant_app/domain/product_model.dart';
+import 'package:plant_app/domain/wishlist.dart';
 import 'package:plant_app/presentations/user_side/screens/home/pages/plantdetails/plant_screen.dart';
+import 'package:plant_app/presentations/user_side/screens/widgets/snackbar.dart';
 
 class MiniPlantPageView extends StatelessWidget {
   const MiniPlantPageView({
@@ -98,10 +101,55 @@ class MiniPlantPageView extends StatelessWidget {
                                           Text(miniplant.price.toString())
                                         ],
                                       ),
-                                      IconButton(
-                                          onPressed: () {},
-                                          icon:
-                                              const Icon(Icons.favorite_border))
+                                      StreamBuilder(
+                                          stream: getAllWishlist(),
+                                          builder: (context, snapshot) {
+                                            final wishlist = snapshot.data!;
+
+                                            return IconButton(
+                                                onPressed: () async {
+                                                  if (wishlist
+                                                      .where((element) =>
+                                                          (element.name +
+                                                              element
+                                                                  .category) ==
+                                                          (miniplant.name +
+                                                              miniplant
+                                                                  .category))
+                                                      .isEmpty) {
+                                                    await addToWishlist(
+                                                        product: miniplant);
+                                                    Utils.customSnackbar(
+                                                        context: context,
+                                                        text:
+                                                            "Item removed to wishlist",
+                                                        type:
+                                                            AnimatedSnackBarType
+                                                                .warning);
+                                                  } else {
+                                                    await removeFromWishlist(
+                                                        miniplant);
+                                                    Utils.customSnackbar(
+                                                        context: context,
+                                                        text:
+                                                            "Item removed to wishlist",
+                                                        type:
+                                                            AnimatedSnackBarType
+                                                                .warning);
+                                                  }
+                                                },
+                                                icon: Icon(wishlist
+                                                        .where((element) =>
+                                                            (element.name +
+                                                                element
+                                                                    .category) ==
+                                                            (miniplant.name +
+                                                                miniplant
+                                                                    .category))
+                                                        .isEmpty
+                                                    ? Icons.favorite_border
+                                                    : Icons.favorite));
+                                          })
                                     ],
                                   )),
                             );

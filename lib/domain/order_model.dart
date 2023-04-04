@@ -51,16 +51,18 @@ class OrderModel {
 
   static OrderModel fromJson(Map<String, dynamic> json) {
     return OrderModel(
-      paymentMethod: json['paymentMethod'],
-      orderId: json['orderId'],
-      orderProductName: json['orderProductName'],
-      orderImage: json['orderImage'],
-      orderPrice: json['orderPrice'],
-      quantity: json['quantity'],
-      address: json['address'],
-      orderDate: json['orderDate'],
-      email: json['email'],
-    );
+        paymentMethod: json['paymentMethod'],
+        orderId: json['orderId'],
+        orderProductName: json['orderProductName'],
+        orderImage: json['orderImage'],
+        orderPrice: json['orderPrice'],
+        quantity: json['quantity'],
+        address: json['address'],
+        orderDate: json['orderDate'],
+        email: json['email'],
+        isCompleted: json['isCompleted'],
+        deleveryProcess: json['deleveryProcess'],
+        isCancelled: json['isCancelled']);
   }
 }
 
@@ -111,12 +113,25 @@ Stream<List<OrderModel>> getAllOrders() {
           .toList());
 }
 
-Future<OrderModel> getOrderByOrderId(String orderId) async {
+Future<void> cancelOrder(OrderModel order) async {
   final doc = await FirebaseFirestore.instance
       .collection('PlantScape')
       .doc('Admin')
       .collection('Orders')
-      .doc(orderId)
-      .get();
-  return OrderModel.fromJson(doc.data()!);
+      .doc(order.orderId);
+
+  final cancelOrder = OrderModel(
+      paymentMethod: order.paymentMethod,
+      orderId: order.orderId,
+      orderProductName: order.orderProductName,
+      orderImage: order.orderImage,
+      orderPrice: order.orderPrice,
+      quantity: order.quantity,
+      address: order.address,
+      orderDate: order.orderDate,
+      email: order.email,
+      isCancelled: true);
+
+  final json = cancelOrder.toJson();
+  await doc.update(json);
 }

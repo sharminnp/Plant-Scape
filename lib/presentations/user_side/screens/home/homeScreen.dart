@@ -3,7 +3,7 @@ import 'package:plant_app/presentations/user_side/screens/home/pages/cart/cart_s
 import 'package:plant_app/presentations/user_side/screens/home/pages/main_Screen.dart';
 import 'package:plant_app/presentations/user_side/screens/home/pages/order/order_screen.dart';
 import 'package:plant_app/presentations/user_side/screens/home/pages/profile/profile_screen.dart';
-import 'package:plant_app/presentations/user_side/screens/home/pages/whishlist/whishlist_screen.dart';
+import 'package:plant_app/presentations/user_side/screens/home/pages/whishlist/wishlist_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -19,7 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
     MainScreen(),
     CartScreen(),
     OrderScreen(),
-    const WhishlistScreen(),
+    const WishlistScreen(),
     const ProfileScreen()
   ];
   Widget build(BuildContext context) {

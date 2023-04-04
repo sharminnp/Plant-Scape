@@ -6,8 +6,8 @@ import 'package:plant_app/domain/order_model.dart';
 import 'package:plant_app/presentations/admin_side/admin_track_order.dart';
 
 class OrderCard extends StatelessWidget {
-  const OrderCard({super.key, required this.order});
-
+  const OrderCard({super.key, required this.order, required this.isActive});
+  final bool isActive;
   final OrderModel order;
   @override
   Widget build(BuildContext context) {
@@ -42,28 +42,30 @@ class OrderCard extends StatelessWidget {
                     color: Colors.green[800]),
               ),
               kHeight10,
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => AdminTrackOrderScreen(
-                            order: order,
-                            DeliveryProcess: order.deleveryProcess,
-                          )));
-                },
-                child: Container(
-                  height: 23,
-                  width: 90,
-                  decoration: BoxDecoration(
-                      color: Colors.green[800],
-                      borderRadius: BorderRadius.circular(20)),
-                  child: Center(
-                    child: Text(
-                      "Track Order",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ),
-              ),
+              isActive
+                  ? GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => AdminTrackOrderScreen(
+                                  order: order,
+                                  DeliveryProcess: order.deleveryProcess,
+                                )));
+                      },
+                      child: Container(
+                        height: 23,
+                        width: 90,
+                        decoration: BoxDecoration(
+                            color: Colors.green[800],
+                            borderRadius: BorderRadius.circular(20)),
+                        child: Center(
+                          child: Text(
+                            "Track Order",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    )
+                  : SizedBox()
             ],
           ),
         ],

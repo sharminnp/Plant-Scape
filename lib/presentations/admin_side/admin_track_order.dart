@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:another_stepper/another_stepper.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:plant_app/domain/order_model.dart';
 import 'package:plant_app/presentations/admin_side/order_card.dart';
 import 'package:plant_app/presentations/user_side/screens/widgets/snackbar.dart';
@@ -40,34 +41,18 @@ class AdminTrackOrderScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     log(DeliveryProcess.toString());
     return Scaffold(
-      //appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: Colors.green[800],
+        title: Text("Track order"),
+        centerTitle: true,
+      ),
       backgroundColor: Colors.grey[200],
       body: SingleChildScrollView(
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 15),
-                child: IconButton(
-                    iconSize: 30,
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: Icon(Icons.arrow_back)),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 80, top: 10),
-                child: Text(
-                  "Track order",
-                  style: TextStyle(
-                      color: Colors.green[800],
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
-            ],
+          OrderCard(
+            order: order,
+            isActive: false,
           ),
-          OrderCard(order: order),
           Padding(
             padding: const EdgeInsets.only(left: 20),
             child: AnotherStepper(
@@ -79,6 +64,17 @@ class AdminTrackOrderScreen extends StatelessWidget {
               activeBarColor: Colors.blue,
             ),
           ),
+          Center(
+              child: ElevatedButton(
+                  onPressed: () {
+                    cancelOrder(order);
+                    Utils.customSnackbar(
+                        context: context,
+                        text: "${order.orderProductName} order canceled",
+                        type: AnimatedSnackBarType.success);
+                    Navigator.pop(context);
+                  },
+                  child: Text("Cancel order")))
         ]),
       ),
       floatingActionButton: FloatingActionButton(
@@ -86,11 +82,11 @@ class AdminTrackOrderScreen extends StatelessWidget {
           int currentDeliveryProcess = order.deleveryProcess;
 
           await updateDeliveryStatus(order, currentDeliveryProcess + 1);
-          // Utils.customSnackbar(
-          //     context: context,
-          //     text: "Delivery status updated",
-          //     type: AnimatedSnackBarType.success);
-          // Navigator.pop(context);
+          Utils.customSnackbar(
+              context: context,
+              text: "Delivery status updated",
+              type: AnimatedSnackBarType.success);
+          Navigator.pop(context);
         },
         child: Icon(Icons.add),
       ),

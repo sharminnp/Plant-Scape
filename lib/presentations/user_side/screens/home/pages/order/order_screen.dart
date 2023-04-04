@@ -1,7 +1,8 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:plant_app/domain/order_model.dart';
-
+import 'package:plant_app/constant/user_constant.dart';
 import 'package:plant_app/presentations/user_side/screens/home/pages/order/active_screen.dart';
 import 'package:plant_app/presentations/user_side/screens/home/pages/order/completed_Screen.dart';
 
@@ -12,6 +13,7 @@ class OrderScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log(userEmail.toString());
     return DefaultTabController(
       length: 2,
       child: Scaffold(

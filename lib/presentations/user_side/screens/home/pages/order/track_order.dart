@@ -1,9 +1,11 @@
 import 'package:another_stepper/another_stepper.dart';
 import 'package:flutter/material.dart';
-import 'package:plant_app/presentations/user_side/screens/home/pages/order/active_screen.dart';
+import 'package:plant_app/domain/order_model.dart';
+import 'package:plant_app/presentations/user_side/screens/home/pages/order/user_order_card.dart';
 
 class TrackOrderScreen extends StatelessWidget {
-  TrackOrderScreen({super.key});
+  TrackOrderScreen({super.key, required this.order});
+  final OrderModel order;
   List<StepperData> stepperData = [
     StepperData(
       title: StepperText("Order Placed",
@@ -48,7 +50,11 @@ class TrackOrderScreen extends StatelessWidget {
           padding: const EdgeInsets.only(top: 20),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            active(context, colors: (Colors.transparent), text1: ''),
+            UserOrderCard(
+              order: order,
+              isActive: false,
+              isCompleted: false,
+            ),
             Padding(
               padding: const EdgeInsets.only(left: 20),
               child: AnotherStepper(

@@ -1,11 +1,12 @@
 import 'dart:developer';
 
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:plant_app/constant/constants.dart';
 import 'package:plant_app/domain/cart_model.dart';
 import 'package:plant_app/domain/product_model.dart';
-
-import 'package:plant_app/presentations/user_side/screens/home/pages/main_Screen.dart';
+import 'package:plant_app/domain/wishlist.dart';
+import 'package:plant_app/presentations/user_side/screens/widgets/snackbar.dart';
 
 class PlantScreen extends StatelessWidget {
   PlantScreen({super.key, required this.product});
@@ -61,13 +62,44 @@ class PlantScreen extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white),
                           ),
-                          IconButton(
-                            color: Colors.white,
-                            onPressed: () {},
-                            icon: const Icon(
-                              Icons.favorite_border,
-                            ),
-                          )
+                          StreamBuilder(
+                              stream: getAllWishlist(),
+                              builder: (context, snapshot) {
+                                final wishlist = snapshot.data!;
+                                return IconButton(
+                                  color: Colors.white,
+                                  onPressed: () async {
+                                    if (wishlist
+                                        .where((element) =>
+                                            (element.name + element.category) ==
+                                            (product.name + product.category))
+                                        .isEmpty) {
+                                      await addToWishlist(product: product);
+                                      Utils.customSnackbar(
+                                          context: context,
+                                          text: "Item Added to wishlist",
+                                          type: AnimatedSnackBarType.success);
+                                    } else {
+                                      await removeFromWishlist(product);
+                                      Utils.customSnackbar(
+                                          context: context,
+                                          text: "Item removed from wishlist",
+                                          type: AnimatedSnackBarType.warning);
+                                    }
+                                  },
+                                  icon: Icon(
+                                    wishlist
+                                            .where((element) =>
+                                                (element.name +
+                                                    element.category) ==
+                                                (product.name +
+                                                    product.category))
+                                            .isEmpty
+                                        ? Icons.favorite_border
+                                        : Icons.favorite,
+                                  ),
+                                );
+                              })
                         ],
                       ),
                       Column(

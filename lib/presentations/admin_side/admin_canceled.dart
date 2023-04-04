@@ -3,8 +3,8 @@ import 'package:plant_app/constant/constants.dart';
 import 'package:plant_app/domain/order_model.dart';
 import 'package:plant_app/presentations/admin_side/order_card.dart';
 
-class AdminCompletedScreen extends StatelessWidget {
-  const AdminCompletedScreen({super.key});
+class AdminCanceled extends StatelessWidget {
+  const AdminCanceled({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,13 +17,13 @@ class AdminCompletedScreen extends StatelessWidget {
             );
           } else if (snapshot.hasData) {
             final orderList = snapshot.data!;
-            List<OrderModel> completedOrderList = [];
+            List<OrderModel> canceledOrderList = [];
             for (var order in orderList) {
-              if (order.isCompleted == true) {
-                completedOrderList.add(order);
+              if (order.isCancelled == true) {
+                canceledOrderList.add(order);
               }
             }
-            return completedOrderList.isEmpty
+            return canceledOrderList.isEmpty
                 ? Center(
                     child: Text("No completed orders"),
                   )
@@ -31,9 +31,9 @@ class AdminCompletedScreen extends StatelessWidget {
                     separatorBuilder: (context, index) {
                       return kHeight10;
                     },
-                    itemCount: completedOrderList.length,
+                    itemCount: canceledOrderList.length,
                     itemBuilder: (context, index) {
-                      final order = completedOrderList[index];
+                      final order = canceledOrderList[index];
                       return OrderCard(
                         order: order,
                         isActive: false,

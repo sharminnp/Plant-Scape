@@ -1,9 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:plant_app/domain/product_model.dart';
+import 'package:get/get.dart';
+import 'package:plant_app/constant/constants.dart';
 import 'package:plant_app/presentations/user_side/screens/home/pages/plantcare/notification_screen.dart';
-import 'package:plant_app/presentations/user_side/screens/home/pages/plantdetails/plant_screen.dart';
-import 'package:plant_app/presentations/user_side/screens/home/pages/product_pageview.dart';
+import 'package:plant_app/presentations/user_side/screens/home/pages/search/search_screen.dart';
 import 'package:plant_app/presentations/user_side/screens/home/pages/userproducts/flower_pageview.dart';
 import 'package:plant_app/presentations/user_side/screens/home/pages/userproducts/miniplant_pageview.dart';
 import 'package:plant_app/presentations/user_side/screens/home/pages/userproducts/plant_pageview.dart';
@@ -43,30 +43,7 @@ class _MainScreenState extends State<MainScreen> {
     Colors.white,
     Colors.pink[200],
   ];
-  final plantImage = [
-    "assets/images/plant1-removebg-preview (1).png",
-    "assets/images/plant2-removebg-preview.png",
-    "assets/images/plant3-removebg-preview.png",
-    "assets/images/plant5-removebg-preview.png",
-    "assets/images/plant6-removebg-preview.png",
-    "assets/images/plant7-removebg-preview.png",
-    "assets/images/plant8-removebg-preview.png",
-    "assets/images/plant9-removebg-preview.png",
-    "assets/images/plant10-removebg-preview.png",
-    "assets/images/plant11-removebg-preview.png",
-    "assets/images/plnt12-removebg-preview.png",
-    "assets/images/imsge13-removebg-preview.png"
-  ];
-  final miniPlantImage = [
-    "assets/images/miniplant3-removebg-preview.png",
-    //"assets/images/miniplant4-removebg-preview.png",
-    "assets/images/miniplant8-removebg-preview.png",
-    "assets/images/miniplant11-removebg-preview.png",
-    "assets/images/miniplant15.png",
-    "assets/images/miniplant16-removebg-preview.png",
-    "assets/images/miniplant17.png",
-    "assets/images/miniplany9-removebg-preview.png"
-  ];
+
   final plantColor = [
     Colors.blue[100],
     Colors.orange[200],
@@ -90,17 +67,7 @@ class _MainScreenState extends State<MainScreen> {
     Colors.grey[400],
     Colors.green[300],
   ];
-  final flowerimageList = [
-    //"assets/images/flower1-removebg-preview.png",
-    "assets/images/flower2-removebg-preview.png",
-    "assets/images/flower3-removebg-preview.png",
-    // "assets/images/flower4-removebg-preview.png",
-    "assets/images/flower5-removebg-preview.png",
-    "assets/images/flower6-removebg-preview.png",
-    "assets/images/flower7.png",
-    "assets/images/flower8-removebg-preview.png",
-    // "assets/images/flower15.png"
-  ];
+
   final _controller = PageController(initialPage: 0);
   @override
   Widget build(BuildContext context) {
@@ -158,137 +125,120 @@ class _MainScreenState extends State<MainScreen> {
                       enlargeStrategy: CenterPageEnlargeStrategy.height),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                child: TextField(
-                  style: const TextStyle(height: 1),
-                  decoration: InputDecoration(
-                      prefixIcon: const Icon(
-                        Icons.search,
-                        color: Colors.grey,
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => SearchScreen()));
+                },
+                child: Container(
+                  margin: EdgeInsets.all(12),
+                  height: 50,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      border:
+                          Border.all(color: Colors.green.shade800, width: 3.5)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        "  Search here....",
+                        style: TextStyle(color: Colors.grey[800], fontSize: 15),
                       ),
-                      focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              width: 4, color: Colors.green.shade800)),
-                      enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Colors.green.shade800, width: 4)),
-                      hintText: "Search"),
+                    ],
+                  ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 15, bottom: 20),
-                child: Column(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => PlantPageView()));
-                      },
-                      child: Container(
-                        height: 180,
-                        width: 350,
-                        decoration: BoxDecoration(
-                            //  color: Colors.red,
-                            image: DecorationImage(
-                                image: AssetImage(
-                                    'assets/images/plantbgimage2.jpg'),
-                                fit: BoxFit.cover)),
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 100, left: 10),
-                          child: Text(
+              Column(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => PlantPageView()));
+                    },
+                    child: Container(
+                      height: 180,
+                      width: 350,
+                      decoration: BoxDecoration(
+                          //  color: Colors.red,
+                          image: DecorationImage(
+                              image:
+                                  AssetImage('assets/images/plantbgimage2.jpg'),
+                              fit: BoxFit.cover)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
                             "Explore Your\nFavourite Plants",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 23,
                                 color: Color.fromARGB(255, 21, 86, 24)),
                           ),
-                        ),
+                        ],
                       ),
                     ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) =>
-                                FlowerPageView(plantColor: plantColor)));
-                      },
-                      child: Container(
-                        height: 180,
-                        width: 350,
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 90, left: 200),
-                          child: Text(
+                  ),
+                  kHeight10,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) =>
+                              FlowerPageView(plantColor: plantColor)));
+                    },
+                    child: Container(
+                      height: 180,
+                      width: 350,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
                             "Shop The\nbestFlowers",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 23,
                                 color: Color.fromARGB(255, 180, 4, 107)),
                           ),
-                        ),
-                        decoration: BoxDecoration(
-                            color: Colors.red,
-                            image: DecorationImage(
-                                image:
-                                    AssetImage('assets/images/flowersbg5.jpg'),
-                                fit: BoxFit.cover)),
+                        ],
                       ),
+                      decoration: BoxDecoration(
+                          color: Colors.red,
+                          image: DecorationImage(
+                              image: AssetImage('assets/images/flowersbg5.jpg'),
+                              fit: BoxFit.cover)),
                     ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) =>
-                                MiniPlantPageView(plantColor: plantColor)));
-                      },
-                      child: Container(
-                        height: 180,
-                        width: 350,
-                        decoration: BoxDecoration(
-                            // color: Colors.red,
-                            image: DecorationImage(
-                                image: AssetImage(
-                                    'assets/images/miniplantbg9.jpg'),
-                                fit: BoxFit.cover)),
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 120, left: 10),
-                          child: Text(
+                  ),
+                  kHeight10,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) =>
+                              MiniPlantPageView(plantColor: plantColor)));
+                    },
+                    child: Container(
+                      height: 180,
+                      width: 350,
+                      decoration: BoxDecoration(
+                          // color: Colors.red,
+                          image: DecorationImage(
+                              image:
+                                  AssetImage('assets/images/miniplantbg9.jpg'),
+                              fit: BoxFit.cover)),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
                             "Decor Your Home\nWith MiniPlants",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 23,
                                 color: Color.fromARGB(255, 30, 125, 34)),
                           ),
-                        ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              // StreamBuilder(
-              //     stream: getAllProducts(),
-              //     builder: (context, snapshot) {
-              //       if (snapshot.hasError) {
-              //         return Center(child: Text("Something went Wrong!"));
-              //       } else if (snapshot.hasData) {
-              //         final productList = snapshot.data;
-              //         return (productList!.isEmpty)
-              //             ? Text("Product List is empty")
-              //             : ProductPageView(
-              //                 controller: _controller,
-              //                 plantImage: plantImage,
-              //                 flowerList: flowerimageList,
-              //                 plantColor: plantColor,
-              //                 miniPlantImage: miniPlantImage,
-              //                 productList: productList);
-              //       } else {
-              //         return Center(child: CircularProgressIndicator());
-              //       }
-              //     }),
             ],
           ),
         ));

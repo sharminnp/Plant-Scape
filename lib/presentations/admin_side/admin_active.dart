@@ -18,7 +18,7 @@ class AdminActiveScreen extends StatelessWidget {
           final orderList = snapshot.data!;
           List<OrderModel> activeOrderList = [];
           for (var order in orderList) {
-            if (order.isCancelled == false) {
+            if (order.isCancelled == false && order.isCompleted == false) {
               activeOrderList.add(order);
             }
           }
@@ -30,11 +30,15 @@ class AdminActiveScreen extends StatelessWidget {
                   itemCount: activeOrderList.length,
                   itemBuilder: (context, index) {
                     final order = activeOrderList[index];
-                    return OrderCard(order: order);
+
+                    return OrderCard(
+                      order: order,
+                      isActive: true,
+                    );
                   },
                 );
         } else {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         }
